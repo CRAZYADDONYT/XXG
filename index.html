@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XXG's</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="brand">XXG's</div>
+      <div class="search-wrap"><input id="searchInput" placeholder="Search videos" /></div>
+      <div class="nav-actions">
+        <button id="openUploadBtn" class="icon-btn" title="Upload">+</button>
+        <button class="icon-btn" title="Notifications">🔔</button>
+        <button id="profileBtn" class="profile-btn">👤 <span id="channelLabel">Set Channel</span> ▾</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <button class="side-item active">Home</button><button class="side-item">Trending</button>
+        <button class="side-item">Subscriptions</button><button class="side-item">Shorts / Clips</button>
+        <button class="side-item">Library</button><button class="side-item">History</button>
+        <button class="side-item">Liked videos</button><button class="side-item">Settings</button>
+      </aside>
+      <main class="main-content">
+        <section class="categories" id="categoryBar"></section>
+        <section id="videoGrid" class="video-grid"></section>
+      </main>
+    </div>
+
+    <dialog id="uploadDialog">
+      <form id="uploadForm" class="upload-form">
+        <h2>Upload Video</h2>
+        <p class="muted">Supports <strong>.mp4, .mov, .avi</strong> up to <strong>500MB</strong>.</p>
+        <div id="dropZone" class="drop-zone" tabindex="0">
+          <p>Drag and drop your video here</p>
+          <p class="muted">or click to select from your device</p>
+          <input type="file" id="videoFile" accept=".mp4,.mov,.avi,video/mp4,video/quicktime,video/x-msvideo" required hidden />
+        </div>
+        <video id="videoPreview" controls class="video-preview hidden"></video>
+        <p id="uploadError" class="error hidden"></p>
+        <label>Thumbnail<input type="file" id="thumbnailFile" accept="image/*" required /></label>
+        <label>Title<input id="titleInput" required maxlength="140" /></label>
+        <label>Description<textarea id="descriptionInput" rows="3" required></textarea></label>
+        <label>Category<select id="categoryInput"></select></label>
+        <progress id="uploadProgress" max="100" value="0"></progress>
+        <p id="uploadStatus" class="muted"></p>
+        <div class="dialog-actions">
+          <button type="button" id="closeUploadBtn" class="ghost">Cancel</button>
+          <button type="submit">Upload</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
