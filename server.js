@@ -7,6 +7,10 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +26,12 @@ fs.mkdirSync(videoUploadsDir, { recursive: true });
 fs.mkdirSync(thumbUploadsDir, { recursive: true });
 
 const app = express();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 const db = new Database(path.join(__dirname, '../app.db'));
 const SQLiteStore = SQLiteStoreFactory(session);
 
