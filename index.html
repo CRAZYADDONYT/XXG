@@ -57,3 +57,20 @@
     <script src="app.js"></script>
   </body>
 </html>
+<input type="file" id="videoFile">
+<button onclick="uploadVideo()">Upload</button>
+async function uploadVideo() {
+  const file = document.getElementById("videoFile").files[0];
+
+  const formData = new FormData();
+  formData.append("video", file);
+
+  const res = await fetch("/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  alert(data.url);
+}
