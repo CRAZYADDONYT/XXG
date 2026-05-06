@@ -157,7 +157,7 @@ const uploadedThumb = await cloudinary.uploader.upload(thumb.path, {
 
     const record = db.prepare(`INSERT INTO videos (user_id, title, description, category, channel_name, video_url, thumbnail_url, duration_label, size_bytes, mime_type, original_name)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
-      .run(req.session.userId, titleInput.trim(), descriptionInput.trim(), categoryInput, req.session.channelName, `/uploads/videos/${video.filename}`, `/uploads/thumbs/${thumb.filename}`, '00:00', video.size, video.mimetype, video.originalname);
+      .run(req.session.userId, titleInput.trim(), descriptionInput.trim(), categoryInput, req.session.channelName, uploadedVideo.secure_url, uploadedThumb.secure_url, '00:00', video.size, video.mimetype, video.originalname);
 
     return res.status(201).json({ ok: true, videoId: record.lastInsertRowid });
   } catch (error) {
