@@ -146,6 +146,15 @@ app.post('/api/videos/upload', upload.fields([{ name: 'videoFile', maxCount: 1 }
     if (!titleInput || !descriptionInput || !categoryInput) return res.status(400).json({ error: 'Missing title, description, or category.' });
     if (!video || !thumb) return res.status(400).json({ error: 'Video file and thumbnail are required.' });
 
+    const uploadedVideo = await cloudinary.uploader.upload(video.path, {
+  resource_type: 'video',
+  folder: 'videos'
+});
+
+const uploadedThumb = await cloudinary.uploader.upload(thumb.path, {
+  folder: 'thumbs'
+});
+
     const record = db.prepare(`INSERT INTO videos (user_id, title, description, category, channel_name, video_url, thumbnail_url, duration_label, size_bytes, mime_type, original_name)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
       .run(req.session.userId, titleInput.trim(), descriptionInput.trim(), categoryInput, req.session.channelName, `/uploads/videos/${video.filename}`, `/uploads/thumbs/${thumb.filename}`, '00:00', video.size, video.mimetype, video.originalname);
